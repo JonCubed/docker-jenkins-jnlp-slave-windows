@@ -35,8 +35,8 @@ param (
     $AgentName2
 )
 
-$secret =  @{$true = $Secret1; $false = $Secret2}[$Secret1 -ne ""]
-$agentName =  @{$true = $AgentName1; $false = $AgentName2}[$AgentName1 -ne ""]
+$secret = @{$true = $Secret1; $false = $Secret2}[$Secret1 -ne ""]
+$agentName = @{$true = $AgentName1; $false = $AgentName2}[$AgentName1 -ne ""]
 
 if ($env:JENKINS_TUNNEL) {
     $Tunnel = $env:JENKINS_TUNNEL
@@ -48,13 +48,15 @@ if ($env:JENKINS_URL) {
 
 if ($env:JENKINS_SECRET -and $secret) {
     Write-Warning "Secret is defined twice, in command-line argument and environment variable"
-} elseif ($env:JENKINS_URL) {
+}
+elseif ($env:JENKINS_URL) {
     $secret = $env:JENKINS_URL
 }
 
 if ($env:JENKINS_AGENT_NAME -and $agentName) {
     Write-Warning "Agent Name is defined twice, in command-line argument and environment variable"
-} elseif ($env:JENKINS_AGENT_NAME) {
+}
+elseif ($env:JENKINS_AGENT_NAME) {
     $agentName = $env:JENKINS_AGENT_NAME
 }
 
@@ -67,9 +69,16 @@ if ($Tunnel) {
 
 $params += ( `
     "-url", $Url, `
+    "-workDir", "C:/Jenkins/Agents", `
     $secret, `
     $agentName `
 )
+
+function Show-Commandline {
+    $args
+}
+
+Show-Commandline "java $javaOpts $jnlpProtocolOpts -cp ./slave.jar hudson.remoting.jnlp.Main" @params
 
 # run slave
 . java $javaOpts $jnlpProtocolOpts -cp ./slave.jar hudson.remoting.jnlp.Main @params
