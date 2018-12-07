@@ -1,5 +1,5 @@
 # Based of script used by jenkinsci/jnlp-slave
-# https://github.cm/jenkinsci/docker-jnlp-slave/blob/master/jenkins-slave
+# https://github.com/jenkinsci/docker-jnlp-slave/blob/master/jenkins-slave
 #
 # Usage : slave-launch.ps1 -Url <url> [-Tunnel <tunnel>] [<secret>] [<agent Name>]
 #
