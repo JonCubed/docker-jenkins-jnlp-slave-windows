@@ -8,7 +8,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 # Remoting versions can be found in Remoting sub-project changelog
 # https://github.com/jenkinsci/remoting/blob/master/CHANGELOG.md
 ENV SLAVE_FILENAME=slave.jar `
-    REMOTING_VERSION=3.15
+    REMOTING_VERSION=3.23
 
 ENV SLAVE_HASH_FILENAME=$SLAVE_FILENAME.sha1
 
@@ -23,8 +23,8 @@ FROM microsoft/nanoserver:sac2016 as git
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
-ENV GIT_VERSION=2.15.1.2 `
-    GIT_TAG=v2.15.1.windows.2
+ENV GIT_VERSION=2.19.1 `
+    GIT_TAG=v2.19.1.windows.1
 
 ENV GIT_FILENAME=MinGit-$GIT_VERSION-64-bit.zip `
     GIT_HASH_FILENAME=$GIT_FILENAME.sha256 `
@@ -48,8 +48,8 @@ RUN Expand-Archive $env:GIT_FILENAME .\git;
 FROM microsoft/nanoserver:sac2016
 
 LABEL maintainer="Jonathan Kuleff <jonathankuleff+docker@gmail.com>" `
-    org.label-schema.schema-version="1.0" `
-    org.label-schema.name="Jenkins JNLP Windows Slave"
+      org.label-schema.schema-version="1.0" `
+      org.label-schema.name="Jenkins JNLP Windows Slave"
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -75,8 +75,8 @@ ENTRYPOINT .\slave-launch.ps1
 
 # Find Jenkins LTS version https://jenkins.io/changelog-stable/
 LABEL application-min-version.jenkins="2.85.0" `
-    application-min-version.jenkins-lts="2.89.2" `
-    application-version.jenkins-remoting="3.15" `
-    application-version.windows="sac2016" `
-    application-version.jdk="1.8" `
-    application-version.git="2.15.1.2"
+      application-min-version.jenkins-lts="2.89.2" `
+      application-version.jenkins-remoting="3.15" `
+      application-version.windows="sac2016" `
+      application-version.jdk="1.8" `
+      application-version.git="2.19.1"
